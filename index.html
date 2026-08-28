@@ -1,40 +1,320 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gold AI Lab</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gold AI Lab — Private V1</title>
 <style>
+  :root{
+    --bg:#0b0f14; --panel:#121821; --panel2:#171f2b; --text:#eef3f8; --muted:#9fb0c3;
+    --line:#263241; --gold:#f1c75b; --good:#63d69a; --bad:#ff7b7b; --warn:#ffd166;
+    --shadow:0 18px 40px rgba(0,0,0,.25);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
+       radial-gradient(circle at 10% 0%,rgba(241,199,91,.08),transparent 32%),var(--bg);color:var(--text)}
+  button,input,select,textarea{font:inherit}
+  .app{min-height:100vh}
+  header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .top{max-width:1180px;margin:auto;padding:16px 18px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#ffe08a,#bd8b19);display:grid;place-items:center;color:#17130a;font-weight:900;box-shadow:var(--shadow)}
+  .brand h1{font-size:18px;margin:0}.brand small{color:var(--muted)}
+  .badge{padding:7px 10px;border-radius:999px;background:#1c2632;border:1px solid var(--line);color:var(--gold);font-size:12px;font-weight:700}
+  main{max-width:1180px;margin:auto;padding:24px 18px 90px}
+  .notice{border:1px solid #4b4022;background:#1d1a11;border-radius:16px;padding:13px 15px;color:#e8dbb5;margin-bottom:18px;font-size:14px}
+  .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-bottom:18px}
+  .card{background:linear-gradient(180deg,var(--panel),#10161e);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+  .hero h2{margin:0 0 8px;font-size:28px}.hero p{color:var(--muted);line-height:1.55;margin:0}
+  .statusbox{display:flex;flex-direction:column;justify-content:center;gap:7px}
+  .statusbox strong{font-size:30px}.statusbox span{color:var(--muted)}
+  nav{display:flex;gap:8px;overflow:auto;margin:0 0 18px;padding-bottom:2px}
+  nav button{border:1px solid var(--line);background:#111822;color:var(--muted);border-radius:12px;padding:10px 13px;white-space:nowrap;cursor:pointer}
+  nav button.active{background:#252014;color:var(--gold);border-color:#58491e}
+  .view{display:none}.view.active{display:block}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  h3{margin:0 0 14px} .sub{color:var(--muted);font-size:13px;margin-top:-7px;margin-bottom:16px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  .field{margin-bottom:13px}
+  input,select,textarea{width:100%;background:#0d131b;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none}
+  textarea{min-height:90px;resize:vertical}
+  input:focus,select:focus,textarea:focus{border-color:#7e6728}
+  .btn{border:0;border-radius:12px;background:linear-gradient(135deg,#f3d36d,#c89926);color:#151007;font-weight:800;padding:12px 15px;cursor:pointer}
+  .btn.secondary{background:#1b2430;color:var(--text);border:1px solid var(--line)}
+  .signal{padding:18px;border-radius:18px;border:1px solid var(--line);background:#0d131b;margin-top:16px}
+  .signal-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .signal-name{font-size:31px;font-weight:900}.wait{color:var(--warn)}.buy{color:var(--good)}.sell{color:var(--bad)}
+  .score{font-size:13px;color:var(--muted)}
+  .reasons{margin:13px 0 0;padding-left:19px;color:#cbd5df;line-height:1.55}
+  .kpi{background:#0d131b;border:1px solid var(--line);border-radius:16px;padding:15px}
+  .kpi span{color:var(--muted);font-size:12px}.kpi strong{display:block;font-size:23px;margin-top:5px}
+  .lesson{border:1px solid var(--line);border-radius:16px;padding:15px;background:#0d131b;margin-bottom:10px}
+  .lesson b{display:block;margin-bottom:5px}.lesson p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted)}
+  .empty{color:var(--muted);padding:18px 0;text-align:center}
+  .pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#1b2430;border:1px solid var(--line);font-size:11px;color:var(--muted)}
+  .footer-note{margin-top:20px;color:#718094;font-size:12px;line-height:1.5}
+  @media(max-width:820px){.hero,.grid2,.grid3{grid-template-columns:1fr}.hero h2{font-size:24px}.top{align-items:flex-start}.brand small{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top">
+    <div class="brand">
+      <div class="logo">G</div>
+      <div><h1>Gold AI Lab</h1><small>Private testing workspace</small></div>
+    </div>
+    <div class="badge">PRIVATE V1 · PRACTICE MODE</div>
+  </div>
+</header>
 
-body {
+<main>
+  <div class="notice"><b>Important:</b> This prototype does not use live market data and does not place trades. The signal engine only evaluates the manual conditions you enter. Use it for practice and testing.</div>
 
-  margin: 0;
+  <section class="hero">
+    <div class="card">
+      <h2>Your XAUUSD trading assistant — first private build.</h2>
+      <p>Practice one repeatable process: higher-timeframe bias → liquidity sweep → 5-minute confirmation → risk check → journal. The system is designed to say <b>WAIT</b> when the setup is incomplete.</p>
+    </div>
+    <div class="card statusbox">
+      <span>Engine status</span>
+      <strong>Manual Rules</strong>
+      <span>Live data connection comes in a later version.</span>
+    </div>
+  </section>
 
-  font-family: Arial, sans-serif;
+  <nav>
+    <button class="active" data-view="dashboard">Dashboard</button>
+    <button data-view="analyze">Analyze Gold</button>
+    <button data-view="risk">Risk Calculator</button>
+    <button data-view="learn">Learning</button>
+    <button data-view="journal">Journal</button>
+  </nav>
 
-  background: #0b0b0b;
+  <section id="dashboard" class="view active">
+    <div class="grid3">
+      <div class="kpi"><span>Current mode</span><strong>Practice</strong></div>
+      <div class="kpi"><span>Saved journal trades</span><strong id="dashTrades">0</strong></div>
+      <div class="kpi"><span>Recorded win rate</span><strong id="dashWin">—</strong></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3>Testing workflow</h3>
+      <div class="lesson"><b>1. Read higher timeframes</b><p>Choose your 4H and 1H directional bias.</p></div>
+      <div class="lesson"><b>2. Check liquidity</b><p>Do not force an entry. Record whether liquidity has actually been swept.</p></div>
+      <div class="lesson"><b>3. Wait for confirmation</b><p>Use the 5-minute confirmation field. If confirmation is missing, the engine stays on WAIT.</p></div>
+      <div class="lesson"><b>4. Calculate risk</b><p>Know the planned dollar risk and estimated lot size before entering.</p></div>
+      <div class="lesson"><b>5. Journal the result</b><p>After the trade, record P/L and notes so we can evaluate the system over 1–2 months.</p></div>
+    </div>
+  </section>
 
-  color: white;
+  <section id="analyze" class="view">
+    <div class="grid2">
+      <div class="card">
+        <h3>Manual market inputs</h3>
+        <p class="sub">This is how we define the signal logic before connecting live data.</p>
+        <div class="field"><label>Current XAUUSD price</label><input id="price" type="number" step="0.01" value="3350.00"></div>
+        <div class="field"><label>4H bias</label><select id="bias4h"><option>Neutral</option><option>Bullish</option><option>Bearish</option></select></div>
+        <div class="field"><label>1H bias</label><select id="bias1h"><option>Neutral</option><option>Bullish</option><option>Bearish</option></select></div>
+        <div class="field"><label>Liquidity sweep</label><select id="sweep"><option value="none">No / unclear</option><option value="sell">Sell-side liquidity swept</option><option value="buy">Buy-side liquidity swept</option></select></div>
+        <div class="field"><label>5m confirmation</label><select id="confirm"><option value="none">None</option><option value="bull">Bullish confirmation</option><option value="bear">Bearish confirmation</option></select></div>
+        <div class="field"><label>Planned stop distance in gold dollars</label><input id="stopDist" type="number" step="0.1" value="5"></div>
+        <button class="btn" onclick="analyze()">Analyze XAUUSD</button>
+      </div>
 
-}
+      <div class="card">
+        <h3>Signal engine</h3>
+        <p class="sub">Rule-based result. AI explanation will be added after the base rules are stable.</p>
+        <div class="signal">
+          <div class="signal-top">
+            <div id="signalName" class="signal-name wait">WAIT</div>
+            <div id="signalScore" class="score">Setup quality: 0/10</div>
+          </div>
+          <div class="grid3" style="margin-top:14px">
+            <div class="kpi"><span>Entry</span><strong id="entry">—</strong></div>
+            <div class="kpi"><span>Stop</span><strong id="sl">—</strong></div>
+            <div class="kpi"><span>TP2 (2R)</span><strong id="tp">—</strong></div>
+          </div>
+          <ul class="reasons" id="reasons"><li>Enter the market conditions and press Analyze.</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-.container {
+  <section id="risk" class="view">
+    <div class="grid2">
+      <div class="card">
+        <h3>XAUUSD risk calculator</h3>
+        <p class="sub">Estimate only. Verify your broker/prop firm's XAUUSD contract specification before using a lot size.</p>
+        <div class="field"><label>Account balance ($)</label><input id="balance" type="number" value="25000"></div>
+        <div class="field"><label>Risk per trade (%)</label><input id="riskPct" type="number" step="0.1" value="0.5"></div>
+        <div class="field"><label>Stop distance ($ in gold)</label><input id="riskStop" type="number" step="0.1" value="5"></div>
+        <button class="btn" onclick="calcRisk()">Calculate Risk</button>
+      </div>
+      <div class="card">
+        <h3>Risk result</h3>
+        <div class="grid3">
+          <div class="kpi"><span>Dollar risk</span><strong id="riskDollar">$125.00</strong></div>
+          <div class="kpi"><span>Estimated lot</span><strong id="lot">0.25</strong></div>
+          <div class="kpi"><span>Risk level</span><strong id="riskLabel">0.5%</strong></div>
+        </div>
+        <div class="footer-note">Formula assumes a common XAUUSD specification where a 1.00 lot position represents 100 oz, so a $1 gold move ≈ $100 per 1.00 lot. Broker specifications can differ.</div>
+      </div>
+    </div>
+  </section>
 
-  max-width: 900px;
+  <section id="learn" class="view">
+    <div class="card">
+      <h3>Learning center — foundation</h3>
+      <p class="sub">These are the concepts the future AI explanation engine should reference.</p>
+      <div class="lesson"><b>Market structure</b><p>Identify higher highs/higher lows in bullish conditions and lower highs/lower lows in bearish conditions. Do not treat every small candle move as a structure change.</p></div>
+      <div class="lesson"><b>Liquidity sweep</b><p>Price trades beyond a visible prior high or low and then reacts. A sweep alone is not an entry; it needs context and confirmation.</p></div>
+      <div class="lesson"><b>BOS / CHOCH</b><p>A break of structure can support continuation; a change of character can suggest a possible shift. Higher-timeframe context matters.</p></div>
+      <div class="lesson"><b>Fair value gap</b><p>An imbalance created by strong displacement. The tool should treat an FVG as an area of interest, not an automatic buy or sell.</p></div>
+      <div class="lesson"><b>Risk management</b><p>Define risk before entry. The system should reject setups whose planned risk or stop placement does not meet your rules.</p></div>
+    </div>
+  </section>
 
-  margin: auto;
+  <section id="journal" class="view">
+    <div class="grid2">
+      <div class="card">
+        <h3>Add journal entry</h3>
+        <div class="field"><label>Date</label><input id="jDate" type="date"></div>
+        <div class="field"><label>Direction</label><select id="jDir"><option>Buy</option><option>Sell</option><option>No Trade</option></select></div>
+        <div class="field"><label>Session</label><select id="jSession"><option>Asia</option><option>London</option><option>New York</option><option>Other</option></select></div>
+        <div class="field"><label>Profit / Loss ($)</label><input id="jPL" type="number" step="0.01" value="0"></div>
+        <div class="field"><label>Notes</label><textarea id="jNotes" placeholder="What did you see? Did you follow the rules?"></textarea></div>
+        <button class="btn" onclick="saveTrade()">Save Entry</button>
+        <button class="btn secondary" style="margin-left:6px" onclick="clearJournal()">Clear Journal</button>
+      </div>
+      <div class="card">
+        <h3>Testing statistics</h3>
+        <div class="grid3">
+          <div class="kpi"><span>Trades</span><strong id="statTrades">0</strong></div>
+          <div class="kpi"><span>Win rate</span><strong id="statWin">—</strong></div>
+          <div class="kpi"><span>Net P/L</span><strong id="statPL">$0.00</strong></div>
+        </div>
+      </div>
+    </div>
 
-  padding: 20px;
+    <div class="card" style="margin-top:18px;overflow:auto">
+      <h3>Journal history</h3>
+      <table>
+        <thead><tr><th>Date</th><th>Direction</th><th>Session</th><th>P/L</th><th>Notes</th></tr></thead>
+        <tbody id="journalRows"></tbody>
+      </table>
+      <div id="journalEmpty" class="empty">No entries yet.</div>
+    </div>
+  </section>
 
-}
+  <div class="footer-note">
+    Gold AI Lab Private V1 is a testing prototype, not a live signal service or automated trading system. It does not know current market prices unless you enter them manually.
+  </div>
+</main>
+</div>
 
-h1 {
+<script>
+  const navButtons = document.querySelectorAll('nav button');
+  navButtons.forEach(btn => btn.addEventListener('click', () => {
+    navButtons.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.view).classList.add('active');
+  }));
 
-  color: #f5c542;
+  document.getElementById('jDate').value = new Date().toISOString().slice(0,10);
 
+  function analyze(){
+    const price = parseFloat(document.getElementById('price').value);
+    const b4 = document.getElementById('bias4h').value;
+    const b1 = document.getElementById('bias1h').value;
+    const sweep = document.getElementById('sweep').value;
+    const conf = document.getElementById('confirm').value;
+    const stop = Math.max(0.01, parseFloat(document.getElementById('stopDist').value) || 5);
+
+    let sig='WAIT', cls='wait', score=0, reasons=[];
+    if (b4 !== 'Neutral') score += 2; else reasons.push('4H bias is neutral.');
+    if (b1 !== 'Neutral') score += 1; else reasons.push('1H bias is neutral.');
+    if (b4 === b1 && b4 !== 'Neutral') { score += 2; reasons.push('4H and 1H bias are aligned.'); }
+    else if (b4 !== 'Neutral' && b1 !== 'Neutral') reasons.push('4H and 1H are not aligned.');
+    if (sweep !== 'none') score += 2; else reasons.push('No clear liquidity sweep recorded.');
+    if (conf !== 'none') score += 3; else reasons.push('No 5-minute confirmation recorded.');
+
+    const buyOK = b4==='Bullish' && b1==='Bullish' && sweep==='sell' && conf==='bull';
+    const sellOK = b4==='Bearish' && b1==='Bearish' && sweep==='buy' && conf==='bear';
+
+    let entry='—', sl='—', tp='—';
+    if (buyOK){
+      sig='BUY'; cls='buy'; score=10;
+      entry=price.toFixed(2); sl=(price-stop).toFixed(2); tp=(price+2*stop).toFixed(2);
+      reasons = ['Higher-timeframe bias is bullish.', 'Sell-side liquidity has been swept.', '5-minute bullish confirmation is present.', 'All V1 buy rules are satisfied.'];
+    } else if (sellOK){
+      sig='SELL'; cls='sell'; score=10;
+      entry=price.toFixed(2); sl=(price+stop).toFixed(2); tp=(price-2*stop).toFixed(2);
+      reasons = ['Higher-timeframe bias is bearish.', 'Buy-side liquidity has been swept.', '5-minute bearish confirmation is present.', 'All V1 sell rules are satisfied.'];
+    } else {
+      reasons.push('V1 rule: if all required conditions are not present, stay on WAIT.');
+    }
+
+    const name=document.getElementById('signalName');
+    name.textContent=sig; name.className='signal-name '+cls;
+    document.getElementById('signalScore').textContent='Setup quality: '+Math.min(score,10)+'/10';
+    document.getElementById('entry').textContent=entry;
+    document.getElementById('sl').textContent=sl;
+    document.getElementById('tp').textContent=tp;
+    document.getElementById('reasons').innerHTML=reasons.map(r=>'<li>'+r+'</li>').join('');
+  }
+
+  function calcRisk(){
+    const bal=Math.max(0,parseFloat(document.getElementById('balance').value)||0);
+    const rp=Math.max(0,parseFloat(document.getElementById('riskPct').value)||0);
+    const sd=Math.max(0.01,parseFloat(document.getElementById('riskStop').value)||0.01);
+    const risk=bal*(rp/100);
+    const lot=risk/(sd*100);
+    document.getElementById('riskDollar').textContent='$'+risk.toFixed(2);
+    document.getElementById('lot').textContent=lot.toFixed(2);
+    document.getElementById('riskLabel').textContent=rp.toFixed(2)+'%';
+  }
+
+  function getJournal(){ return JSON.parse(localStorage.getItem('goldAiJournal')||'[]'); }
+  function saveJournal(x){ localStorage.setItem('goldAiJournal',JSON.stringify(x)); renderJournal(); }
+
+  function saveTrade(){
+    const data=getJournal();
+    data.unshift({
+      date:document.getElementById('jDate').value,
+      dir:document.getElementById('jDir').value,
+      session:document.getElementById('jSession').value,
+      pl:parseFloat(document.getElementById('jPL').value)||0,
+      notes:document.getElementById('jNotes').value.trim()
+    });
+    saveJournal(data);
+    document.getElementById('jPL').value='0';
+    document.getElementById('jNotes').value='';
+  }
+
+  function clearJournal(){
+    if(confirm('Clear all saved journal entries on this device?')) saveJournal([]);
+  }
+
+  function renderJournal(){
+    const data=getJournal();
+    const rows=document.getElementById('journalRows');
+    rows.innerHTML=data.map(x=>`<tr><td>${x.date||''}</td><td>${x.dir}</td><td>${x.session}</td><td>${x.pl>=0?'+':''}$${x.pl.toFixed(2)}</td><td>${escapeHtml(x.notes)}</td></tr>`).join('');
+    document.getElementById('journalEmpty').style.display=data.length?'none':'block';
+    const actual=data.filter(x=>x.dir!=='No Trade');
+    const wins=actual.filter(x=>x.pl>0).length;
+    const winRate=actual.length?((wins/actual.length)*100).toFixed(0)+'%':'—';
+    const net=data.reduce((a,b)=>a+b.pl,0);
+    document.getElementById('statTrades').textContent=actual.length;
+    document.getElementById('statWin').textContent=winRate;
+    document.getElementById('statPL').textContent=(net>=0?'+':'')+'$'+net.toFixed(2);
+    document.getElementById('dashTrades').textContent=actual.length;
+    document.getElementById('dashWin').textContent=winRate;
+  }
+
+  function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  renderJournal(); calcRisk();
+</script>
+</body>
+</html>
