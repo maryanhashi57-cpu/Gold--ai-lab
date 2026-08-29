@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
 
   try {
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
     const response = await fetch(
 
-      `https://api.twelvedata.com/price?symbol=XAU/USD&apikey=${apiKey}`
+      `https://api.twelvedata.com/price?symbol=XAU%2FUSD&apikey=${apiKey}`
 
     );
 
