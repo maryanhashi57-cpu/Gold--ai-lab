@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
     );
 
     const data = await response.json();
-
+return res.status(200).json(data);
     return res.status(200).json({
 
       symbol: "XAU/USD",
