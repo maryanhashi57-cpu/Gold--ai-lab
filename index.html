@@ -316,7 +316,7 @@
 
   function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
   renderJournal(); calcRisk();
-  fetch('/api/gold').then(r=>r.json()).then(d=>{const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
+  fetch('/api/gold').then(r=>r.json()).then(d=>{document.getElementById('price').value=Number(d.price).toFixed(2);const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
 </script>
 </body>
 </html>
