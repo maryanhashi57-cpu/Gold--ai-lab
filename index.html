@@ -317,6 +317,26 @@
   function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
   renderJournal(); calcRisk();
   fetch('/api/gold').then(r=>r.json()).then(d=>{document.getElementById('price').value=Number(d.price).toFixed(2);const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
+fetch('/api/analyze')
+  .then(r => r.json())
+  .then(d => {
+    if (d.error) throw new Error(d.error);
+
+    document.getElementById('price').value = Number(d.price).toFixed(2);
+    document.getElementById('bias4h').value = d.bias4h;
+    document.getElementById('bias1h').value = d.bias1h;
+
+    document.getElementById('sweep').value =
+      d.liquiditySweep === 'Sell-side liquidity swept' ? 'sell' :
+      d.liquiditySweep === 'Buy-side liquidity swept' ? 'buy' : 'none';
+
+    document.getElementById('confirm').value =
+      d.confirmation5m === 'Bullish confirmation' ? 'bull' :
+      d.confirmation5m === 'Bearish confirmation' ? 'bear' : 'none';
+
+    analyze();
+  })
+  .catch(e => console.error('Live analysis error:', e));
 </script>
 </body>
 </html>
