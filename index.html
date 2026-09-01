@@ -67,7 +67,7 @@
     </div>
     <div class="badge">PRIVATE V1 · PRACTICE MODE</div>
   </div>
-</header>
+</header>h
 
 <main>
   <div class="notice"><b>Important:</b> This prototype does not use live market data and does not place trades. The signal engine only evaluates the manual conditions you enter. Use it for practice and testing.</div>
@@ -79,8 +79,7 @@
     </div>
     <div class="card statusbox">
       <span>Engine status</span>
-      <strong>Manual Rules</strong>
-      <span>Live data connection comes in a later version.</span>
+      <strong>Manual Rules</strong>strong
     </div>
   </section>
 
@@ -88,6 +87,8 @@
     <button class="active" data-view="dashboard">Dashboard</button>
     <button data-view="analyze">Analyze Gold</button>
     <button data-view="risk">Risk Calculator</button>
+
+    
     <button data-view="learn">Learning</button>
     <button data-view="journal">Journal</button>
   </nav>
@@ -315,6 +316,7 @@
 
   function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
   renderJournal(); calcRisk();
+  fetch('/api/gold').then(r=>r.json()).then(d=>{const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
 </script>
 </body>
 </html>
