@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gold AI Lab — Private V1</title>
+<title>Gold AI Lab — Private V1</title>/
 <style>
   :root{
     --bg:#0b0f14; --panel:#121821; --panel2:#171f2b; --text:#eef3f8; --muted:#9fb0c3;
@@ -333,23 +333,7 @@
       }
     })
     .catch(err => console.error('Gold refresh error:', err));
-}, 10000);
-  fetch('/api/gold?ts=' + Date.now(), { cache: 'no-store' })
-    .then(r => r.json())
-    .then(d => {
-      if (d && d.price) {
-        const p = Number(d.price).toFixed(2);
-        document.getElementById('price').value = p;
-
-        const live = [...document.body.children].find(el =>
-          el.textContent?.trim().startsWith('LIVE XAUUSD:')
-        );
-
-        if (live) live.textContent = 'LIVE XAUUSD: $' + p;
-      }
-    })
-    .catch(err => console.error('Gold refresh error:', err));
-}, 10000);
+}, 10000)
   
     
     
