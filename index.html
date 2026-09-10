@@ -317,7 +317,23 @@
   function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
   renderJournal(); calcRisk();
   fetch('/api/gold').then(r=>r.json()).then(d=>{document.getElementById('price').value=Number(d.price).toFixed(2);const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
-  setInterval(() => {setInterval(() => {
+  setInterval(() => {
+  fetch('/api/gold?ts=' + Date.now(), { cache: 'no-store' })
+    .then(r => r.json())
+    .then(d => {
+      if (d && d.price) {
+        const p = Number(d.price).toFixed(2);
+        document.getElementById('price').value = p;
+
+        const live = [...document.body.children].find(el =>
+          el.textContent?.trim().startsWith('LIVE XAUUSD:')
+        );
+
+        if (live) live.textContent = 'LIVE XAUUSD: $' + p;
+      }
+    })
+    .catch(err => console.error('Gold refresh error:', err));
+}, 10000);
   fetch('/api/gold?ts=' + Date.now(), { cache: 'no-store' })
     .then(r => r.json())
     .then(d => {
