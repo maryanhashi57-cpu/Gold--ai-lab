@@ -62,7 +62,17 @@ module.exports = async function handler(req, res) {
     } else if (latest5.close < latest5.open) {
       confirmation = "Bearish confirmation";
     }
+let signal = "WAIT";
 
+if (getBias(h4) === "Bullish" && getBias(h1) === "Bullish" &&
+    sweep === "Sell-side liquidity swept" &&
+    confirmation === "Bullish confirmation") {
+  signal = "BUY";
+} else if (getBias(h4) === "Bearish" && getBias(h1) === "Bearish" &&
+           sweep === "Buy-side liquidity swept" &&
+           confirmation === "Bearish confirmation") {
+  signal = "SELL";
+}
     return res.status(200).json({
       symbol: "XAU/USD",
       price: latest5.close,
@@ -70,7 +80,7 @@ module.exports = async function handler(req, res) {
       bias1h: getBias(h1),
       liquiditySweep: sweep,
       confirmation5m: confirmation,
-      updated: new Date().toISOString()
+     signal: signal, updated: new Date().toISOString()
     });
 
   } catch (error) {
