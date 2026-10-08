@@ -1,368 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gold AI Lab — Private V1</title>/
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gold AI Lab — Scalping Practice</title>
 <style>
-  :root{
-    --bg:#0b0f14; --panel:#121821; --panel2:#171f2b; --text:#eef3f8; --muted:#9fb0c3;
-    --line:#263241; --gold:#f1c75b; --good:#63d69a; --bad:#ff7b7b; --warn:#ffd166;
-    --shadow:0 18px 40px rgba(0,0,0,.25);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
-       radial-gradient(circle at 10% 0%,rgba(241,199,91,.08),transparent 32%),var(--bg);color:var(--text)}
-  button,input,select,textarea{font:inherit}
-  .app{min-height:100vh}
-  header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .top{max-width:1180px;margin:auto;padding:16px 18px;display:flex;align-items:center;gap:14px;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:12px}
-  .logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#ffe08a,#bd8b19);display:grid;place-items:center;color:#17130a;font-weight:900;box-shadow:var(--shadow)}
-  .brand h1{font-size:18px;margin:0}.brand small{color:var(--muted)}
-  .badge{padding:7px 10px;border-radius:999px;background:#1c2632;border:1px solid var(--line);color:var(--gold);font-size:12px;font-weight:700}
-  main{max-width:1180px;margin:auto;padding:24px 18px 90px}
-  .notice{border:1px solid #4b4022;background:#1d1a11;border-radius:16px;padding:13px 15px;color:#e8dbb5;margin-bottom:18px;font-size:14px}
-  .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-bottom:18px}
-  .card{background:linear-gradient(180deg,var(--panel),#10161e);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
-  .hero h2{margin:0 0 8px;font-size:28px}.hero p{color:var(--muted);line-height:1.55;margin:0}
-  .statusbox{display:flex;flex-direction:column;justify-content:center;gap:7px}
-  .statusbox strong{font-size:30px}.statusbox span{color:var(--muted)}
-  nav{display:flex;gap:8px;overflow:auto;margin:0 0 18px;padding-bottom:2px}
-  nav button{border:1px solid var(--line);background:#111822;color:var(--muted);border-radius:12px;padding:10px 13px;white-space:nowrap;cursor:pointer}
-  nav button.active{background:#252014;color:var(--gold);border-color:#58491e}
-  .view{display:none}.view.active{display:block}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  h3{margin:0 0 14px} .sub{color:var(--muted);font-size:13px;margin-top:-7px;margin-bottom:16px}
-  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-  .field{margin-bottom:13px}
-  input,select,textarea{width:100%;background:#0d131b;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none}
-  textarea{min-height:90px;resize:vertical}
-  input:focus,select:focus,textarea:focus{border-color:#7e6728}
-  .btn{border:0;border-radius:12px;background:linear-gradient(135deg,#f3d36d,#c89926);color:#151007;font-weight:800;padding:12px 15px;cursor:pointer}
-  .btn.secondary{background:#1b2430;color:var(--text);border:1px solid var(--line)}
-  .signal{padding:18px;border-radius:18px;border:1px solid var(--line);background:#0d131b;margin-top:16px}
-  .signal-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .signal-name{font-size:31px;font-weight:900}.wait{color:var(--warn)}.buy{color:var(--good)}.sell{color:var(--bad)}
-  .score{font-size:13px;color:var(--muted)}
-  .reasons{margin:13px 0 0;padding-left:19px;color:#cbd5df;line-height:1.55}
-  .kpi{background:#0d131b;border:1px solid var(--line);border-radius:16px;padding:15px}
-  .kpi span{color:var(--muted);font-size:12px}.kpi strong{display:block;font-size:23px;margin-top:5px}
-  .lesson{border:1px solid var(--line);border-radius:16px;padding:15px;background:#0d131b;margin-bottom:10px}
-  .lesson b{display:block;margin-bottom:5px}.lesson p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}
-  table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted)}
-  .empty{color:var(--muted);padding:18px 0;text-align:center}
-  .pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#1b2430;border:1px solid var(--line);font-size:11px;color:var(--muted)}
-  .footer-note{margin-top:20px;color:#718094;font-size:12px;line-height:1.5}
-  @media(max-width:820px){.hero,.grid2,.grid3{grid-template-columns:1fr}.hero h2{font-size:24px}.top{align-items:flex-start}.brand small{display:block}}
+:root{--bg:#0b0f14;--panel:#121821;--panel2:#171f2b;--text:#eef3f8;--muted:#aebdcc;--line:#263241;--gold:#f1c75b;--buy:#63d69a;--sell:#ff7b7b;--wait:#ffd166}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#111822;border-bottom:1px solid var(--line)}.top,main{max-width:1100px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:22px;margin:0}.subtle{color:var(--muted);font-size:13px}.pill{color:var(--gold);border:1px solid #5b4b25;border-radius:30px;padding:6px 12px;font-size:12px}
+nav{display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--line);margin:8px 0 18px;padding-bottom:12px}
+button{cursor:pointer;font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--text);background:#1b2430}
+button.active,button.primary{background:var(--gold);color:#211a0e;font-weight:700;border-color:var(--gold)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold)}
+.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin-bottom:16px;min-width:0}
+.label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}.value{font-size:26px;overflow-wrap:anywhere;font-weight:750}h2{font-size:22px;margin:0 0 12px}h3{font-size:17px;margin:0 0 10px}
+.notice{border-left:3px solid var(--gold);background:#221d12;border-radius:5px;padding:12px 15px;margin:16px 0;color:#f1e4c9}.signal{font-size:42px;font-weight:800}.BUY{color:var(--buy)}.SELL{color:var(--sell)}.WAIT{color:var(--wait)}
+input,select,textarea{display:block;width:100%;margin-top:6px;margin-bottom:13px;padding:10px 11px;background:#0d131b;color:var(--text);border:1px solid #39485b;border-radius:8px;font:inherit}
+textarea{min-height:85px}label{font-size:13px;color:var(--muted)}table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid var(--line);padding:9px;text-align:left}th{color:var(--muted)}.table-wrap{overflow-x:auto}
+ul{padding-left:20px}li{margin:8px 0}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.muted{color:var(--muted)}
+footer{color:var(--muted);font-size:12px;padding:18px 0 30px}
+@media(max-width:760px){.grid,.two{grid-template-columns:1fr}.value{font-size:23px}.signal{font-size:34px}}
 </style>
 </head>
 <body>
-<div class="app">
-<header>
-  <div class="top">
-    <div class="brand">
-      <div class="logo">G</div>
-      <div><h1>Gold AI Lab</h1><small>Private testing workspace</small></div>
-    </div>
-    <div class="badge">PRIVATE V1 · PRACTICE MODE</div>
-  </div>
-</header>h
-
+<header><div class="top"><div><h1>Gold AI Lab</h1><span class="subtle">XAU/USD • Scalping research and practice</span></div><span class="pill">PRACTICE MODE • NO AUTO TRADES</span></div></header>
 <main>
-<div class="notice"><b>Important:</b> This prototype uses live XAUUSD price data but does not place trades automatically. The signal engine evaluates the conditions you enter. Use it for practice and testing.</div>  
-
-  <section class="hero">
-    <div class="card">
-      <h2>Your XAUUSD trading assistant — first private build.</h2>
-      <p>Practice one repeatable process: higher-timeframe bias → liquidity sweep → 5-minute confirmation → risk check → journal. The system is designed to say <b>WAIT</b> when the setup is incomplete.</p>
-    </div>
-    <div class="card statusbox">
-      <span>Engine status</span>
-      <strong>Manual Rules</strong>strong
-    </div>
-  </section>
-
-  <nav>
-    <button class="active" data-view="dashboard">Dashboard</button>
-    <button data-view="analyze">Analyze Gold</button>
-    <button data-view="risk">Risk Calculator</button>
-
-    
-    <button data-view="learn">Learning</button>
-    <button data-view="journal">Journal</button>
-  </nav>
-
-  <section id="dashboard" class="view active">
-    <div class="grid3">
-      <div class="kpi"><span>Current mode</span><strong>Practice</strong></div>
-      <div class="kpi"><span>Saved journal trades</span><strong id="dashTrades">0</strong></div>
-      <div class="kpi"><span>Recorded win rate</span><strong id="dashWin">—</strong></div>
-    </div>
-    <div class="card" style="margin-top:18px">
-      <h3>Testing workflow</h3>
-      <div class="lesson"><b>1. Read higher timeframes</b><p>Choose your 4H and 1H directional bias.</p></div>
-      <div class="lesson"><b>2. Check liquidity</b><p>Do not force an entry. Record whether liquidity has actually been swept.</p></div>
-      <div class="lesson"><b>3. Wait for confirmation</b><p>Use the 5-minute confirmation field. If confirmation is missing, the engine stays on WAIT.</p></div>
-      <div class="lesson"><b>4. Calculate risk</b><p>Know the planned dollar risk and estimated lot size before entering.</p></div>
-      <div class="lesson"><b>5. Journal the result</b><p>After the trade, record P/L and notes so we can evaluate the system over 1–2 months.</p></div>
-    </div>
-  </section>
-
-  <section id="analyze" class="view">
-    <div class="grid2">
-      <div class="card">
-        <h3>Manual market inputs</h3>
-        <p class="sub">This is how we define the signal logic before connecting live data.</p>
-        <div class="field"><label>Current XAUUSD price</label><input id="price" type="number" step="0.01" value="3350.00"></div>
-        <div class="field"><label>4H bias</label><select id="bias4h"><option>Neutral</option><option>Bullish</option><option>Bearish</option></select></div>
-        <div class="field"><label>1H bias</label><select id="bias1h"><option>Neutral</option><option>Bullish</option><option>Bearish</option></select></div>
-        <div class="field"><label>Liquidity sweep</label><select id="sweep"><option value="none">No / unclear</option><option value="sell">Sell-side liquidity swept</option><option value="buy">Buy-side liquidity swept</option></select></div>
-        <div class="field"><label>5m confirmation</label><select id="confirm"><option value="none">None</option><option value="bull">Bullish confirmation</option><option value="bear">Bearish confirmation</option></select></div>
-        <div class="field"><label>Planned stop distance in gold dollars</label><input id="stopDist" type="number" step="0.1" value="5"></div>
-        <button class="btn" onclick="analyze()">Analyze XAUUSD</button>
-      </div>
-
-      <div class="card">
-        <h3>Signal engine</h3>
-        <p class="sub">Rule-based result. AI explanation will be added after the base rules are stable.</p>
-        <div class="signal">
-          <div class="signal-top">
-            <div id="signalName" class="signal-name wait">WAIT</div>
-            <div id="signalScore" class="score">Setup quality: 0/10</div>
-          </div>
-          <div class="grid3" style="margin-top:14px">
-            <div class="kpi"><span>Entry</span><strong id="entry">—</strong></div>
-            <div class="kpi"><span>Stop</span><strong id="sl">—</strong></div>
-            <div class="kpi"><span>TP2 (2R)</span><strong id="tp">—</strong></div>
-          </div>
-          <ul class="reasons" id="reasons"><li>Enter the market conditions and press Analyze.</li></ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="risk" class="view">
-    <div class="grid2">
-      <div class="card">
-        <h3>XAUUSD risk calculator</h3>
-        <p class="sub">Estimate only. Verify your broker/prop firm's XAUUSD contract specification before using a lot size.</p>
-        <div class="field"><label>Account balance ($)</label><input id="balance" type="number" value="25000"></div>
-        <div class="field"><label>Risk per trade (%)</label><input id="riskPct" type="number" step="0.1" value="0.5"></div>
-        <div class="field"><label>Stop distance ($ in gold)</label><input id="riskStop" type="number" step="0.1" value="5"></div>
-        <button class="btn" onclick="calcRisk()">Calculate Risk</button>
-      </div>
-      <div class="card">
-        <h3>Risk result</h3>
-        <div class="grid3">
-          <div class="kpi"><span>Dollar risk</span><strong id="riskDollar">$125.00</strong></div>
-          <div class="kpi"><span>Estimated lot</span><strong id="lot">0.25</strong></div>
-          <div class="kpi"><span>Risk level</span><strong id="riskLabel">0.5%</strong></div>
-        </div>
-        <div class="footer-note">Formula assumes a common XAUUSD specification where a 1.00 lot position represents 100 oz, so a $1 gold move ≈ $100 per 1.00 lot. Broker specifications can differ.</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="learn" class="view">
-    <div class="card">
-      <h3>Learning center — foundation</h3>
-      <p class="sub">These are the concepts the future AI explanation engine should reference.</p>
-      <div class="lesson"><b>Market structure</b><p>Identify higher highs/higher lows in bullish conditions and lower highs/lower lows in bearish conditions. Do not treat every small candle move as a structure change.</p></div>
-      <div class="lesson"><b>Liquidity sweep</b><p>Price trades beyond a visible prior high or low and then reacts. A sweep alone is not an entry; it needs context and confirmation.</p></div>
-      <div class="lesson"><b>BOS / CHOCH</b><p>A break of structure can support continuation; a change of character can suggest a possible shift. Higher-timeframe context matters.</p></div>
-      <div class="lesson"><b>Fair value gap</b><p>An imbalance created by strong displacement. The tool should treat an FVG as an area of interest, not an automatic buy or sell.</p></div>
-      <div class="lesson"><b>Risk management</b><p>Define risk before entry. The system should reject setups whose planned risk or stop placement does not meet your rules.</p></div>
-    </div>
-  </section>
-
-  <section id="journal" class="view">
-    <div class="grid2">
-      <div class="card">
-        <h3>Add journal entry</h3>
-        <div class="field"><label>Date</label><input id="jDate" type="date"></div>
-        <div class="field"><label>Direction</label><select id="jDir"><option>Buy</option><option>Sell</option><option>No Trade</option></select></div>
-        <div class="field"><label>Session</label><select id="jSession"><option>Asia</option><option>London</option><option>New York</option><option>Other</option></select></div>
-        <div class="field"><label>Profit / Loss ($)</label><input id="jPL" type="number" step="0.01" value="0"></div>
-        <div class="field"><label>Notes</label><textarea id="jNotes" placeholder="What did you see? Did you follow the rules?"></textarea></div>
-        <button class="btn" onclick="saveTrade()">Save Entry</button>
-        <button class="btn secondary" style="margin-left:6px" onclick="clearJournal()">Clear Journal</button>
-      </div>
-      <div class="card">
-        <h3>Testing statistics</h3>
-        <div class="grid3">
-          <div class="kpi"><span>Trades</span><strong id="statTrades">0</strong></div>
-          <div class="kpi"><span>Win rate</span><strong id="statWin">—</strong></div>
-          <div class="kpi"><span>Net P/L</span><strong id="statPL">$0.00</strong></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:18px;overflow:auto">
-      <h3>Journal history</h3>
-      <table>
-        <thead><tr><th>Date</th><th>Direction</th><th>Session</th><th>P/L</th><th>Notes</th></tr></thead>
-        <tbody id="journalRows"></tbody>
-      </table>
-      <div id="journalEmpty" class="empty">No entries yet.</div>
-    </div>
-  </section>
-
-  <div class="footer-note">
-    Gold AI Lab Private V1 is a testing prototype, not a live signal service or automated trading system. It does not know current market prices unless you enter them manually.
-  </div>
+<div class="notice"><b>Important:</b> These are experimental, rule-based candle signals, not proven forecasts. Prices may be delayed and do not include your broker's spread or slippage. Confirm entries yourself; do not use for real or funded trading without proper testing.</div>
+<nav aria-label="Sections"><button class="active" data-view="dashboard">Dashboard</button><button data-view="signals">Analyze Gold</button><button data-view="risk">Risk Calculator</button><button data-view="journal">Journal</button><button data-view="learn">Learning</button></nav>
+<section class="view active" id="dashboard">
+ <div class="grid">
+  <div class="card"><span class="label">Latest XAU/USD price from data feed</span><div class="value" id="dashboardPrice">—</div></div>
+  <div class="card"><span class="label">Scalping signal</span><div class="value WAIT" id="dashboardSignal">WAIT</div></div>
+  <div class="card"><span class="label">Last analysis</span><div class="value" style="font-size:17px" id="dashboardUpdate">Not loaded</div></div>
+ </div>
+ <div class="card"><h2>15m → 5m → 1m process</h2><p>Read the 15-minute direction, check the 5-minute trend, then wait for a completed 1-minute liquidity rejection or continuation candle. Signal quality matters more than trade count.</p><p class="muted">A signal is <b>not</b> an order. No fixed 40-second closing rule. Use the separate Analyze Gold tab for indicative entry, stop and targets.</p></div>
+ <div class="grid"><div class="card"><span class="label">Journaled trades</span><div class="value" id="dashTrades">0</div></div><div class="card"><span class="label">Journal win rate</span><div class="value" id="dashWin">—</div></div><div class="card"><span class="label">Current status</span><div id="dashboardStatus">Waiting for data…</div></div></div>
+</section>
+<section class="view" id="signals">
+ <div class="card"><div class="row"><div><h2>Live scalping analysis</h2><span class="subtle">Checks completed 1-minute candles; refreshes about once per minute while this tab is visible.</span></div><button class="primary" id="refreshBtn">Refresh analysis</button></div>
+ <div class="row" style="margin:15px 0"><div class="signal WAIT" id="signalName">WAIT</div><span class="muted" id="signalSetup">Loading market data…</span></div>
+ <div class="grid"><div><span class="label">15-minute bias</span><div class="value" id="bias15m">—</div></div><div><span class="label">5-minute bias</span><div class="value" id="bias5m">—</div></div><div><span class="label">Signal candle time</span><div id="candleTime">—</div></div></div>
+ </div>
+ <div class="grid"><div class="card"><span class="label">Indicative entry</span><div class="value" id="entry">—</div></div><div class="card"><span class="label">Stop-loss</span><div class="value" id="sl">—</div></div><div class="card"><span class="label">Take-profit 2 (1.5R)</span><div class="value" id="tp">—</div></div></div>
+ <div class="card"><span class="label">Take-profit 1 (1R)</span><strong id="tp1">—</strong><h3 style="margin-top:18px">Why?</h3><ul id="reasons"><li>Checking for a valid setup…</li></ul><p class="muted" id="analysisStatus" role="status">Waiting for first refresh…</p></div>
+</section>
+<section class="view" id="risk"><div class="two"><div class="card"><h2>Risk calculator</h2>
+<label>Account balance (USD)<input id="balance" type="number" min="0" step="0.01" value="25000"></label>
+<label>Risk per trade (%)<input id="riskPct" type="number" min="0" max="100" step="0.1" value="0.5"></label>
+<label>Planned stop distance (gold price dollars)<input id="riskStop" type="number" min="0.01" step="0.01" value="5"></label>
+<label>Broker contract size (ounces per lot)<input id="contractSize" type="number" min="0.01" step="1" value="100"></label>
+<button class="primary" id="calcBtn">Calculate</button></div>
+<div class="card"><h2>Risk estimate</h2><div class="label">Dollar amount at risk</div><div class="value" id="riskDollar">—</div><div class="label">Estimated lots (rounded DOWN to 0.01)</div><div class="value" id="lot">—</div><div class="label">Risk percent</div><div class="value" id="riskLabel">—</div><p class="muted">Verify contract size, minimum lot, stop-distance rules, commissions and spreads with your broker. This calculator cannot enforce FundedNext account limits.</p></div></div></section>
+<section class="view" id="journal"><div class="two"><div class="card"><h2>Add journal entry</h2>
+<label>Trade date<input id="jDate" type="date"></label>
+<label>Direction<select id="jDir"><option>Buy</option><option>Sell</option><option>No Trade</option></select></label>
+<label>Session<select id="jSession"><option>Asia</option><option>London</option><option>New York</option><option>Other</option></select></label>
+<label>Profit or loss (USD)<input id="jPL" type="number" step="0.01" value="0"></label>
+<label>Notes<textarea id="jNotes" placeholder="Trade setup, risk and execution details"></textarea></label>
+<button class="primary" id="saveTradeBtn">Save journal entry</button> <button id="clearJournalBtn">Clear journal</button></div>
+<div class="card"><h2>Testing statistics</h2><div class="label">Trades</div><div class="value" id="statTrades">0</div><div class="label">Win rate</div><div class="value" id="statWin">—</div><div class="label">Net P/L</div><div class="value" id="statPL">—</div><p class="muted">Journal entries are saved in this browser only, not to a trading account.</p></div></div>
+<div class="card table-wrap"><h2>Trade journal history</h2><table><thead><tr><th>Date</th><th>Direction</th><th>Session</th><th>P/L</th><th>Notes</th></tr></thead><tbody id="journalRows"></tbody></table><div id="journalEmpty" class="muted">No entries yet.</div></div></section>
+<section class="view" id="learn"><div class="card"><h2>How this strategy works</h2><ul><li><b>15-minute trend:</b> directional context, not a prediction.</li><li><b>5-minute trend:</b> filters countertrend entries.</li><li><b>1-minute setup:</b> looks for liquidity rejection or a strong continuation candle after it closes.</li><li><b>Risk:</b> stop location comes from recent price structure; targets are provisional. Do not force a trade count or a fixed close time.</li><li><b>Testing:</b> track false signals, slippage, broker spreads, session times and actual outcomes. Historical paper testing alone does not prove future profitability.</li></ul></div></section>
+<footer>Gold AI Lab — experimental practice workspace. Never treat an API price as a guaranteed executable broker quote. No automatic order placement.</footer>
 </main>
-</div>
-
 <script>
-  const navButtons = document.querySelectorAll('nav button');
-  navButtons.forEach(btn => btn.addEventListener('click', () => {
-    navButtons.forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+'use strict';
+const $ = id => document.getElementById(id);
+const show = (id, value) => { $(id).textContent = value; };
+const money = n => Number.isFinite(n) ? Number(n).toFixed(2) : '—';
+const localTime = value => {
+  if (!value) return '—';
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? '—' : d.toLocaleString();
+};
+
+for (const btn of document.querySelectorAll('nav button')) {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(btn.dataset.view).classList.add('active');
-  }));
+    $(btn.dataset.view).classList.add('active');
+  });
+}
 
-  document.getElementById('jDate').value = new Date().toISOString().slice(0,10);
-
-  function analyze(){
-    const price = parseFloat(document.getElementById('price').value);
-    const b4 = document.getElementById('bias4h').value;
-    const b1 = document.getElementById('bias1h').value;
-    const sweep = document.getElementById('sweep').value;
-    const conf = document.getElementById('confirm').value;
-    const stop = Math.max(0.01, parseFloat(document.getElementById('stopDist').value) || 5);
-
-    let sig='WAIT', cls='wait', score=0, reasons=[];
-    if (b4 !== 'Neutral') score += 2; else reasons.push('4H bias is neutral.');
-    if (b1 !== 'Neutral') score += 1; else reasons.push('1H bias is neutral.');
-    if (b4 === b1 && b4 !== 'Neutral') { score += 2; reasons.push('4H and 1H bias are aligned.'); }
-    else if (b4 !== 'Neutral' && b1 !== 'Neutral') reasons.push('4H and 1H are not aligned.');
-    if (sweep !== 'none') score += 2; else reasons.push('No clear liquidity sweep recorded.');
-    if (conf !== 'none') score += 3; else reasons.push('No 5-minute confirmation recorded.');
-
-    const buyOK = b4==='Bullish' && b1==='Bullish' && sweep==='sell' && conf==='bull';
-    const sellOK = b4==='Bearish' && b1==='Bearish' && sweep==='buy' && conf==='bear';
-
-    let entry='—', sl='—', tp='—';
-    if (buyOK){
-      sig='BUY'; cls='buy'; score=10;
-      entry=price.toFixed(2); sl=(price-stop).toFixed(2); tp=(price+2*stop).toFixed(2);
-      reasons = ['Higher-timeframe bias is bullish.', 'Sell-side liquidity has been swept.', '5-minute bullish confirmation is present.', 'All V1 buy rules are satisfied.'];
-    } else if (sellOK){
-      sig='SELL'; cls='sell'; score=10;
-      entry=price.toFixed(2); sl=(price+stop).toFixed(2); tp=(price-2*stop).toFixed(2);
-      reasons = ['Higher-timeframe bias is bearish.', 'Buy-side liquidity has been swept.', '5-minute bearish confirmation is present.', 'All V1 sell rules are satisfied.'];
-    } else {
-      reasons.push('V1 rule: if all required conditions are not present, stay on WAIT.');
+let analysisBusy = false;
+async function refreshAnalysis() {
+  if (analysisBusy) return;
+  analysisBusy = true;
+  $('refreshBtn').disabled = true;
+  show('analysisStatus', 'Updating…');
+  try {
+    const response = await fetch('/api/analyze', {cache:'no-store'});
+    const d = await response.json();
+    if (!response.ok || d.error) throw new Error(d.details || d.error || 'Analysis failed');
+    if (!['BUY', 'SELL', 'WAIT'].includes(d.signal)) throw new Error('Unexpected signal data');
+    const sig = d.signal;
+    for (const id of ['signalName', 'dashboardSignal']) {
+      show(id, sig);
+      $(id).className = id === 'signalName' ? 'signal ' + sig : 'value ' + sig;
     }
-
-    const name=document.getElementById('signalName');
-    name.textContent=sig; name.className='signal-name '+cls;
-    document.getElementById('signalScore').textContent='Setup quality: '+Math.min(score,10)+'/10';
-    document.getElementById('entry').textContent=entry;
-    document.getElementById('sl').textContent=sl;
-    document.getElementById('tp').textContent=tp;
-    document.getElementById('reasons').innerHTML=reasons.map(r=>'<li>'+r+'</li>').join('');
+    show('dashboardPrice', Number.isFinite(d.price) ? '$' + money(d.price) : '—');
+    show('dashboardUpdate', localTime(d.updated));
+    show('dashboardStatus', sig === 'WAIT' ? 'No confirmed setup' : 'Signal to review');
+    show('bias15m', d.bias15m || '—');
+    show('bias5m', d.bias5m || '—');
+    show('candleTime', localTime(d.candleTime));
+    show('signalSetup', d.setup === 'None' ? 'No confirmed setup' : (d.setup || '—'));
+    show('entry', money(d.entry));
+    show('sl', money(d.stopLoss));
+    show('tp1', money(d.takeProfit1));
+    show('tp', money(d.takeProfit2));
+    const list = $('reasons');
+    list.replaceChildren();
+    for (const reason of Array.isArray(d.reasons) ? d.reasons : []) {
+      const li = document.createElement('li');
+      li.textContent = String(reason);
+      list.append(li);
+    }
+    show('analysisStatus', 'Last checked: ' + localTime(d.updated) + ' · Demo signals only');
+  } catch (error) {
+    show('analysisStatus', 'Could not update: ' + error.message);
+    show('dashboardStatus', 'Data error; do not trade from this screen');
+    for (const id of ['signalName', 'dashboardSignal']) {
+      show(id, 'WAIT');
+      $(id).className = id === 'signalName' ? 'signal WAIT' : 'value WAIT';
+    }
+    for (const id of ['entry','sl','tp','tp1']) show(id, '—');
+    show('signalSetup', 'No valid live analysis');
+  } finally {
+    analysisBusy = false;
+    $('refreshBtn').disabled = false;
   }
+}
+$('refreshBtn').addEventListener('click', refreshAnalysis);
+refreshAnalysis();
+// Uses ONE API call per refresh; pause while the page is not visible.
+setInterval(() => { if (!document.hidden) refreshAnalysis(); }, 60000);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) refreshAnalysis();
+});
 
-  function calcRisk(){
-    const bal=Math.max(0,parseFloat(document.getElementById('balance').value)||0);
-    const rp=Math.max(0,parseFloat(document.getElementById('riskPct').value)||0);
-    const sd=Math.max(0.01,parseFloat(document.getElementById('riskStop').value)||0.01);
-    const risk=bal*(rp/100);
-    const lot=risk/(sd*100);
-    document.getElementById('riskDollar').textContent='$'+risk.toFixed(2);
-    document.getElementById('lot').textContent=lot.toFixed(2);
-    document.getElementById('riskLabel').textContent=rp.toFixed(2)+'%';
+function calcRisk() {
+  const balance = Number($('balance').value);
+  const percent = Number($('riskPct').value);
+  const stop = Number($('riskStop').value);
+  const ounces = Number($('contractSize').value);
+  if (![balance, percent, stop, ounces].every(Number.isFinite) ||
+      balance <= 0 || percent <= 0 || percent > 100 || stop <= 0 || ounces <= 0) {
+    for (const id of ['riskDollar','lot','riskLabel']) show(id, 'Invalid input');
+    return;
   }
+  const risk = balance * percent / 100;
+  const lots = Math.floor((risk / (stop * ounces) + 1e-9) * 100) / 100;
+  show('riskDollar', '$' + money(risk));
+  show('lot', lots.toFixed(2));
+  show('riskLabel', percent.toFixed(2) + '%');
+}
+$('calcBtn').addEventListener('click',calcRisk);
+calcRisk();
 
-  function getJournal(){ return JSON.parse(localStorage.getItem('goldAiJournal')||'[]'); }
-  function saveJournal(x){ localStorage.setItem('goldAiJournal',JSON.stringify(x)); renderJournal(); }
-
-  function saveTrade(){
-    const data=getJournal();
-    data.unshift({
-      date:document.getElementById('jDate').value,
-      dir:document.getElementById('jDir').value,
-      session:document.getElementById('jSession').value,
-      pl:parseFloat(document.getElementById('jPL').value)||0,
-      notes:document.getElementById('jNotes').value.trim()
-    });
-    saveJournal(data);
-    document.getElementById('jPL').value='0';
-    document.getElementById('jNotes').value='';
+function getJournal() {
+  try {
+    const v = JSON.parse(localStorage.getItem('goldAiJournal') || '[]');
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+function storeJournal(data) { localStorage.setItem('goldAiJournal',JSON.stringify(data)); renderJournal(); }
+function renderJournal() {
+  const data = getJournal();
+  const body = $('journalRows');
+  body.replaceChildren();
+  for (const x of data) {
+    const row = document.createElement('tr');
+    const pl = Number(x.pl) || 0;
+    for (const v of [x.date || '',x.dir || '',x.session || '',(pl >= 0 ? '+' : '') + '$' + money(pl),x.notes || '']) {
+      const cell = document.createElement('td');
+      cell.textContent = String(v);
+      row.append(cell);
+    }
+    body.append(row);
   }
-
-  function clearJournal(){
-    if(confirm('Clear all saved journal entries on this device?')) saveJournal([]);
-  }
-
-  function renderJournal(){
-    const data=getJournal();
-    const rows=document.getElementById('journalRows');
-    rows.innerHTML=data.map(x=>`<tr><td>${x.date||''}</td><td>${x.dir}</td><td>${x.session}</td><td>${x.pl>=0?'+':''}$${x.pl.toFixed(2)}</td><td>${escapeHtml(x.notes)}</td></tr>`).join('');
-    document.getElementById('journalEmpty').style.display=data.length?'none':'block';
-    const actual=data.filter(x=>x.dir!=='No Trade');
-    const wins=actual.filter(x=>x.pl>0).length;
-    const winRate=actual.length?((wins/actual.length)*100).toFixed(0)+'%':'—';
-    const net=data.reduce((a,b)=>a+b.pl,0);
-    document.getElementById('statTrades').textContent=actual.length;
-    document.getElementById('statWin').textContent=winRate;
-    document.getElementById('statPL').textContent=(net>=0?'+':'')+'$'+net.toFixed(2);
-    document.getElementById('dashTrades').textContent=actual.length;
-    document.getElementById('dashWin').textContent=winRate;
-  }
-
-  function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-  renderJournal(); calcRisk();
-  fetch('/api/gold').then(r=>r.json()).then(d=>{document.getElementById('price').value=Number(d.price).toFixed(2);const x=document.createElement('div');x.textContent='LIVE XAUUSD: $'+Number(d.price).toFixed(2);x.style='position:fixed;top:10px;right:10px;background:#111;color:#ffd700;padding:10px 14px;border-radius:8px;z-index:9999;font-weight:bold';document.body.appendChild(x);});
-  setInterval(() => {
-  fetch('/api/gold?ts=' + Date.now(), { cache: 'no-store' })
-    .then(r => r.json())
-    .then(d => {
-      if (d && d.price) {
-        const p = Number(d.price).toFixed(2);
-        document.getElementById('price').value = p;
-
-        const live = [...document.body.children].find(el =>
-          el.textContent?.trim().startsWith('LIVE XAUUSD:')
-        );
-
-        if (live) live.textContent = 'LIVE XAUUSD: $' + p;
-      }
-    })
-    .catch(err => console.error('Gold refresh error:', err));
-}, 20000);
-  
-    
-    
-      
-        
-      
-    
-    
-
-fetch('/api/analyze')
-  .then(r => r.json())
-  .then(d => {
-    if (d.error) throw new Error(d.error);
-
-    document.getElementById('price').value = Number(d.price).toFixed(2);
-    document.getElementById('bias4h').value = d.bias4h;
-    document.getElementById('bias1h').value = d.bias1h;
-
-    document.getElementById('sweep').value =
-      d.liquiditySweep === 'Sell-side liquidity swept' ? 'sell' :
-      d.liquiditySweep === 'Buy-side liquidity swept' ? 'buy' : 'none';
-
-    document.getElementById('confirm').value =
-      d.confirmation5m === 'Bullish confirmation' ? 'bull' :
-      d.confirmation5m === 'Bearish confirmation' ? 'bear' : 'none';
-
-    analyze();
-  })
-  .catch(e => console.error('Live analysis error:', e));
+  $('journalEmpty').style.display = data.length ? 'none' : 'block';
+  const trades = data.filter(x=> x.dir !== 'No Trade');
+  const wins = trades.filter(x=>(Number(x.pl)||0)>0).length;
+  const rate = trades.length ? (wins / trades.length * 100).toFixed(0) + '%' : '—';
+  const net = data.reduce((s,x)=>s+(Number(x.pl)||0),0);
+  show('dashTrades',trades.length);
+  show('dashWin',rate);
+  show('statTrades',trades.length);
+  show('statWin',rate);
+  show('statPL',(net >= 0 ? '+' : '') + '$' + money(net));
+}
+$('jDate').value = new Date().toLocaleDateString('en-CA');
+$('saveTradeBtn').addEventListener('click',()=>{
+  if (!$('jDate').value) return alert('Please select a date.');
+  const data = getJournal();
+  data.unshift({date:$('jDate').value,dir:$('jDir').value,session:$('jSession').value,
+    pl:Number($('jPL').value)||0,notes:$('jNotes').value.trim()});
+  storeJournal(data);
+  $('jPL').value = '0'; $('jNotes').value = '';
+});
+$('clearJournalBtn').addEventListener('click',()=>{
+  if (confirm('Delete this browser’s saved journal entries?')) storeJournal([]);
+});
+renderJournal();
 </script>
 </body>
 </html>
